@@ -165,7 +165,7 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton, deleteCategory
                   Photo Type +
                 </button>
               </div>
-              <div className="w-full px-3">
+              <div className="grid grid-cols-2 gap-4 content-start w-full px-3">
                 {categoryValues.map((categoryValue, index) => (
                   <CategoryInputField
                     id="phototype"
