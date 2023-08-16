@@ -25,7 +25,7 @@ const Navbar = () => {
             </span>
             <Link href="/dashboard" className={commonStyles}>Dashboard</Link>
             <Link href="/staff" className={commonStyles}>Staff</Link>
-            {/* <Link href="/category" className={commonStyles}>Category</Link> */}
+            <Link href="/category" className={commonStyles}>Category</Link>
             <Link href="/projects" className={commonStyles}>Projects</Link>
             <Link href={"/time_allocation/"+new Date().toJSON().slice(0, 10)} className={commonStyles}>Time Allocation</Link>
             <Link href="/dashboard" className={commonStyles}>Report</Link>
