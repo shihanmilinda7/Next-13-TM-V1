@@ -9,9 +9,9 @@ const Navbar = () => {
 
   // styles for all links
   // const commonStyles = "px-4 py-2 rounded-lg border-2 border-red-600";
-  const commonStyles = "px-4 py-2 rounded-lg navlink text-white text-xl";
-  const activeStyle = commonStyles + 'bg-red-700 text-white';
-  const nonActiveStyle = commonStyles + 'text-black';
+  const commonStyles = "text-xl px-4 py-2 rounded-lg navlink text-white text-xl";
+  const activeStyle = commonStyles + 'bg-slate-700 text-indigo-900 font-bold';
+  const nonActiveStyle = commonStyles + 'text-white';
   return (
     // <header classNameName="navbar">
     <header>
@@ -23,12 +23,12 @@ const Navbar = () => {
                 SDS
               </h1>
             </span>
-            <Link href="/dashboard" className={commonStyles}>Dashboard</Link>
-            <Link href="/staff" className={commonStyles}>Staff</Link>
-            <Link href="/category" className={commonStyles}>Category</Link>
-            <Link href="/projects" className={commonStyles}>Projects</Link>
-            <Link href={"/time_allocation/"+new Date().toJSON().slice(0, 10)} className={commonStyles}>Time Allocation</Link>
-            <Link href="/dashboard" className={commonStyles}>Report</Link>
+            <Link href="/dashboard" className={currentRoute === '/dashboard' ? activeStyle : nonActiveStyle}>Dashboard</Link>
+            <Link href="/staff" className={currentRoute === '/staff' ? activeStyle : nonActiveStyle}>Staff</Link>
+            <Link href="/category" className={currentRoute === '/category' ? activeStyle : nonActiveStyle}>Category</Link>
+            <Link href="/projects" className={currentRoute === '/projects' ? activeStyle : nonActiveStyle}>Projects</Link>
+            <Link href={"/time_allocation/"+new Date().toJSON().slice(0, 10)} className={currentRoute === "/time_allocation/"+new Date().toJSON().slice(0, 10) ? activeStyle : nonActiveStyle}>Time Allocation</Link>
+            <Link href="/" className={currentRoute === '/' ? activeStyle : nonActiveStyle}>Report</Link>
           </li>
           <li className='flex gap-1 w-fit justify-end'>
             <Link href="/" className={commonStyles}>Logout</Link>

@@ -140,8 +140,8 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton, deleteCategory
           value={categoryid}
           onChange={(e) => setCategoryid(e.target.value)}
         />
-        <div className="pl-12 pb-1">
-          <h1 className="text-2xl uppercase text-indigo-800">Add New Cateory</h1>
+        <div className="pl-12 pb-4">
+          <h1 className="text-2xl uppercase text-indigo-800">Add New Category</h1>
         </div>
         <div className="flex items-center justify-center pl-10 pr-10 pb-12">
           <div className="mx-auto w-full max-w-[550px]">
