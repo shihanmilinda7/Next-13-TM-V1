@@ -13,11 +13,11 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
 
   const [categoryid, setCategoryid] = useState(selRowData?.categoryid ?? "");
   const [categoryname, setCategoryname] = useState(selRowData?.categoryname ?? "");
-  const [categoryValues, setCategoryValues] = useState([]);
+  const [categoryValues, setCategoryValues] = useState(selRowData?.categoryValues ?? []);
 
   const [showAddnewAlert, setShowAddnewAlert] = useState(false);
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
-  const [showDelButton, setShowDelButton] = useState("");
+  const [showDelButton, setShowDelButton] = useState(false);
 
   const customStyles = {
     overlay: {
@@ -35,8 +35,11 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
 
   //handle addnew & update
   const actionHandler = () => {
-    console.log("categoryValues", categoryValues,)
-    addCategoryAction();
+    if (categoryid) {
+      updateCategoryAction();
+    } else {
+      addCategoryAction();
+    }
   }
 
   //add category action
@@ -51,12 +54,40 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
     );
 
     const res = await responseNewCat.json();
-    console.log(res);
+    // console.log(res);
 
     if (res.message == "SUCCESS") {
       setAddnewIsOpen(false);
-      // window.location.href = "/staff"
       // setShowAddnewAlert(true);
+      window.location.href = "/category"
+      // setTimeout(() => {
+      //   setShowAddnewAlert(false);
+      // }, 2000);
+    } else {
+      // router.push("/");
+    }
+    return res;
+
+  };
+
+  //update category action
+  const updateCategoryAction = async (e) => {
+    const responseUpdateCat = await fetch(
+      "api/category_routers/update_category_details",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ categoryid, categoryname, categoryValues }),
+      }
+    );
+
+    const res = await responseUpdateCat.json();
+    // console.log(res);
+
+    if (res.message == "SUCCESS") {
+      setAddnewIsOpen(false);
+      // setShowAddnewAlert(true);
+      window.location.href = "/category"
       // setTimeout(() => {
       //   setShowAddnewAlert(false);
       // }, 2000);
@@ -73,6 +104,13 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
     tmpCatValue.push({ categorydetailname: "" });
     setCategoryValues(tmpCatValue);
   }
+
+  //delete input field
+  const deleteInputField = (e, index) => {
+    const tmpCatValue = [...categoryValues];
+    tmpCatValue.splice(index, 1);
+    setCategoryValues(tmpCatValue);
+  };
 
   //update catgory value array
   const handleCatValueChange = (e, index) => {
@@ -136,6 +174,7 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
                     value={categoryValue.categorydetailname}
                     onChange={handleCatValueChange}
                     index={index}
+                    deleteInputField={deleteInputField}
                   />
                 ))}
               </div>
@@ -149,7 +188,7 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
                   Submit
                 </button>
               </div>
-              <div className="w-1/2">
+              <div className="w-1/2 mr-3">
                 <button onClick={() => setAddnewIsOpen(false)}
                   className="rounded-lg bg-gradient-to-r from-amber-500 to-amber-600  hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
                 >

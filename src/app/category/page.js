@@ -3,28 +3,31 @@
 import Navbar from "../components/navbar";
 import React, { useEffect, useState } from "react";
 import AddNewCategoryPopup from "../components/addnew_category_popup";
+import { CategoryTable } from "../components/category_table";
 
 export default function Category() {
  
-  // const [staffRowData, setStaffRowData] = useState("");
+  const [categoryRowData, setCategoryRowData] = useState("");
 
-  // useEffect(() => {
-  //   // declare the data fetching function
-  //   const fetchData = async () => {
-  //     const all_staff_details = await fetch(
-  //       "api/staff_routers/get_all_staff_details",
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({}),
-  //       }
-  //     );
-  //     const res = await all_staff_details.json();
-  //     setStaffRowData(res.users);
-  //   };
-  //   // call the function
-  //   fetchData().catch(console.error);
-  // }, []);
+  useEffect(() => {
+    // declare the data fetching function
+    const fetchData = async () => {
+      const all_category_details = await fetch(
+        "api/category_routers/get_all_category_details",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
+        }
+      );
+      const res = await all_category_details.json();
+      setCategoryRowData(res.categoriesData);
+    };
+    // call the function
+    fetchData().catch(console.error);
+  }, []);
+
+
   return (
     <div>
       <Navbar />
@@ -34,13 +37,13 @@ export default function Category() {
         </h1>
         <AddNewCategoryPopup buttonName="Add Category" delButton = "false"/>
       </div>
-      {/* <div>
-        {staffRowData && (
-          <StaffTable
-            staffRowData={staffRowData}
+      <div>
+        {categoryRowData && (
+          <CategoryTable
+          categoryRowData={categoryRowData}
           />
         )}
-      </div> */}
+      </div>
     </div>
   );
 }

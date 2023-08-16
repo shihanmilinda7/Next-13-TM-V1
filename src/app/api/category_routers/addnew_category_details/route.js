@@ -19,13 +19,13 @@ export async function POST(request) {
   if (headerId) {
     for (let i = 0; i < categoryValues.length; i++) {
       const element = categoryValues[i];
-      const newTCatDetail = await prisma.categorydetails.create({
+      const newCatDetail = await prisma.categorydetails.create({
         data: {
           categoryid: headerId,
           categorydetailname: element.categorydetailname,
         },
       });
-      allNewCategoryDetails.push(newTCatDetail);
+      allNewCategoryDetails.push(newCatDetail);
       // console.log(newTimeAllocDetils)
     }
     res = { message: "SUCCESS", newCategoty, allNewCategoryDetails }
