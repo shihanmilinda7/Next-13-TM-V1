@@ -138,8 +138,8 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
         console.log(res);
 
         if (res.message == "SUCCESS") {
-            // setAddnewIsOpen(false);
-            // window.location.href = "/task"
+            setAddnewIsOpen(false);
+            window.location.href = "/task"
             // setShowAddnewAlert(true);
             // setTimeout(() => {
             //     setShowAddnewAlert(false);
