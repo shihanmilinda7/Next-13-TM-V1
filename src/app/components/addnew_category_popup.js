@@ -3,25 +3,22 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import InputField from "./input_field";
-import { useRouter } from "next/navigation";
 import ConfirmAlertbox from "./confirm_alertbox";
 import Toast from "./toast";
+import CategoryInputField from "./category_input_field";
 
 const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
   const [addnewIsOpen, setAddnewIsOpen] = useState(false);
 
 
   const [categoryid, setCategoryid] = useState(selRowData?.categoryid ?? "");
-  const [name, setName] = useState(selRowData?.name ?? "");
+  const [categoryname, setCategoryname] = useState(selRowData?.categoryname ?? "");
+  const [categoryValues, setCategoryValues] = useState([]);
 
   const [showAddnewAlert, setShowAddnewAlert] = useState(false);
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
-  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-  const [showDelButton, setShowDelButton] = useState(delButton);
+  const [showDelButton, setShowDelButton] = useState("");
 
-  // const [saveChangeWarning, setSaveChangeWarning] = useState(false);
-
-  const router = useRouter()
   const customStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -36,117 +33,53 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
     },
   };
 
-  // function beforeSaveAction() {
-  //   delete selRowData.createdAt;
-  //   const newObject = { staffid, name, contracttype, contactno, nic, password }
-  //   const keys = Object.keys(selRowData);
-  //   for (const key of keys) {
-  //     if (selRowData[key] !== newObject[key]) {
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // }
+  //handle addnew & update
+  const actionHandler = () => {
+    console.log("categoryValues", categoryValues,)
+    addCategoryAction();
+  }
 
-  // const actionHandler = () => {
-  //   if (staffid) {
-  //     if (beforeSaveAction()) {
-  //       console.log("no any")
-  //       setAddnewIsOpen(false);
-  //     } else {
-  //       console.log("change")
-  //       updateStaffAction();
-  //       // setSaveChangeWarning(true);
-  //     }
+  //add category action
+  const addCategoryAction = async (e) => {
+    const responseNewCat = await fetch(
+      "api/category_routers/addnew_category_details",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ categoryname, categoryValues }),
+      }
+    );
 
-  //   } else {
-  //     addStaffNewAction();
-  //   }
-  // }
+    const res = await responseNewCat.json();
+    console.log(res);
 
-  // //delete staff action
-  // const deleteActionHandler = async () => {
+    if (res.message == "SUCCESS") {
+      setAddnewIsOpen(false);
+      // window.location.href = "/staff"
+      // setShowAddnewAlert(true);
+      // setTimeout(() => {
+      //   setShowAddnewAlert(false);
+      // }, 2000);
+    } else {
+      // router.push("/");
+    }
+    return res;
 
-  //     if (staffid) {
-  //       const responseDelStaff = await fetch(
-  //         "api/staff_routers/del_staff_details",
-  //         {
-  //           method: "POST",
-  //           headers: { "Content-Type": "application/json" },
-  //           body: JSON.stringify({ staffid }),
-  //         }
-  //       );
+  };
 
-  //       const res = await responseDelStaff.json();
-  //       console.log(res);
-  //       setAddnewIsOpen(false);
-  //       window.location.href = "/staff"
-  //     } else {
-  //       window.location.href = "/staff"
-  //     }
-    
-  // }
+  //add new input field for category value
+  const addInputField = () => {
+    const tmpCatValue = [...categoryValues];
+    tmpCatValue.push({ categorydetailname: "" });
+    setCategoryValues(tmpCatValue);
+  }
 
-  // //add new staff action
-  // const addStaffNewAction = async (e) => {
-  //   if (password == confirmpassword) {
-  //     const responseNewStaff = await fetch(
-  //       "api/staff_routers/addnew_staff_details",
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({ name, contracttype, contactno, nic, password }),
-  //       }
-  //     );
-
-  //     const res = await responseNewStaff.json();
-  //     console.log(res);
-
-  //     if (res.message == "SUCCESS") {
-  //       setAddnewIsOpen(false);
-  //       setShowAddnewAlert(true);
-  //       setTimeout(() => {
-  //         setShowAddnewAlert(false);
-  //         window.location.href = "/staff"
-  //       }, 2000);
-  //     } else {
-  //       router.push("/");
-  //     }
-  //     return res;
-  //   } else {
-  //     setShowDeleteAlert(true);
-  //     setTimeout(() => {
-  //       setShowDeleteAlert(false);
-  //     }, 5000);
-  //   }
-  // };
-
-  // //update existing staff action
-  // const updateStaffAction = async (e) => {
-  //   const responseUpdateStaff = await fetch(
-  //     "api/staff_routers/update_staff_details",
-  //     {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ staffid, name, contracttype, contactno, nic, password }),
-  //     }
-  //   );
-
-  //   const res = await responseUpdateStaff.json();
-  //   console.log(res);
-
-  //   if (res.message == "SUCCESS") {
-  //     setAddnewIsOpen(false);
-  //     setShowUpdateAlert(true);
-  //     setTimeout(() => {
-  //       setShowUpdateAlert(false);
-  //       window.location.href = "/staff"
-  //     }, 3000);
-  //   } else {
-  //     router.push("/");
-  //   }
-  //   return res;
-  // };
+  //update catgory value array
+  const handleCatValueChange = (e, index) => {
+    const values = [...categoryValues];
+    values[index].categorydetailname = e.target.value;
+    setCategoryValues(values);
+  };
 
   return (
     <div>
@@ -172,34 +105,51 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
         <div className="pl-12 pb-1">
           <h1 className="text-2xl uppercase text-indigo-800">Add New Cateory</h1>
         </div>
-        <div className="flex items-center justify-center p-12">
+        <div className="flex items-center justify-center pl-10 pr-10 pb-12">
           <div className="mx-auto w-full max-w-[550px]">
-            <div className="-mx-3 flex flex-wrap">
-              <div className="w-full px-3 sm:w-1/2">
+            <div className="-mx-3 flex flex-wrap flex-col">
+              <div className="w-full px-3">
                 <InputField
-                  label="Name"
-                  id="name"
-                  name="name"
+                  label="Category Name"
+                  id="categoryname"
+                  name="categoryname"
                   type="text"
                   autocomplete=""
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Category Name"
+                  value={categoryname}
+                  onChange={(e) => setCategoryname(e.target.value)}
                 />
               </div>
-              <div className="w-full px-3 sm:w-1/2">
-          <h1>AAAAAA</h1>
+              <div className="">
+                <button onClick={addInputField}
+                  className="rounded-lg bg-white text-slate-700 py-3 px-8 text-center text-base font-semibold outline-none"
+                >
+                  Photo Type +
+                </button>
+              </div>
+              <div className="w-full px-3">
+                {categoryValues.map((categoryValue, index) => (
+                  <CategoryInputField
+                    id="phototype"
+                    name="phototype"
+                    type="text"
+                    value={categoryValue.categorydetailname}
+                    onChange={handleCatValueChange}
+                    index={index}
+                  />
+                ))}
               </div>
             </div>
-            <div className="flex">
-              <div className="mr-3">
+
+            <div className="flex items-center justify-center">
+              <div className="mr-3 w-1/2">
                 <button onClick={actionHandler}
                   className="rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
                 >
                   Submit
                 </button>
               </div>
-              <div>
+              <div className="w-1/2">
                 <button onClick={() => setAddnewIsOpen(false)}
                   className="rounded-lg bg-gradient-to-r from-amber-500 to-amber-600  hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
                 >
@@ -207,7 +157,7 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
                 </button>
               </div>
               <div className={showDelButton === "true" ? "flex ml-auto" : "flex ml-auto hidden"}>
-                <ConfirmAlertbox buttonName="Delete" leftButtonAction={deleteActionHandler} title="Are you sure?" description="Do you want to delete this record ?" />
+                <ConfirmAlertbox buttonName="Delete" title="Are you sure?" description="Do you want to delete this record ?" />
               </div>
             </div>
           </div>

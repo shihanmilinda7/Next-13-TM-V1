@@ -23,6 +23,19 @@ model staff{
   createdAt DateTime @default(now())
 }
 
+model categories{
+  categoryid       Int      @id @default(autoincrement())
+  categoryname String   
+}
+
+model categorydetails{
+  categorydetailid       Int      @id @default(autoincrement())
+  categoryid       Int
+  categorydetailname String   
+}
+
+
+
 model user{
   userid       Int      @id @default(autoincrement())
   name String   
