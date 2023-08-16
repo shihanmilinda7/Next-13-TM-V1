@@ -35,7 +35,7 @@ export default function Category() {
         <h1 className="text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
           Category
         </h1>
-        <AddNewCategoryPopup buttonName="Add Category" delButton = "false"/>
+        <AddNewCategoryPopup buttonName="Add Category" delButton = "false" deleteCategoryInputField = "true"/>
       </div>
       <div>
         {categoryRowData && (

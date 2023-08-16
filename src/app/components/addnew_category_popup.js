@@ -7,7 +7,7 @@ import ConfirmAlertbox from "./confirm_alertbox";
 import Toast from "./toast";
 import CategoryInputField from "./category_input_field";
 
-const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
+const AddNewCategoryPopup = ({ buttonName, selRowData, delButton, deleteCategoryInputField }) => {
   const [addnewIsOpen, setAddnewIsOpen] = useState(false);
 
 
@@ -175,6 +175,7 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton }) => {
                     onChange={handleCatValueChange}
                     index={index}
                     deleteInputField={deleteInputField}
+                    deleteCategoryInputField={deleteCategoryInputField}
                   />
                 ))}
               </div>

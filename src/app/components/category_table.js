@@ -34,7 +34,7 @@ export const CategoryTable = ({ categoryRowData }) => {
                                     ))}
                                 </td>
                                 {/* <td className="p-4 cursor-pointer hover:text-amber-900 hover:font-extrabold" onClick={()=>selRow(tableRow)}>Edit</td> */}
-                                <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover:font-extrabold"><AddNewCategoryPopup buttonName="Edit | Delete" selRowData={tableRow} delButton="true"/></td>
+                                <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover:font-extrabold"><AddNewCategoryPopup buttonName="Edit | Delete" selRowData={tableRow} delButton="true" deleteCategoryInputField="false"/></td>
                             </tr>
                         ))}
                     </tbody>
