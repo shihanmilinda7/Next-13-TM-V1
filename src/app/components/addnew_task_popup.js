@@ -70,7 +70,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
         fetchData().catch(console.error);
     }
 
-    //fetch staff data
+    //fetch category data
     const fetchCategoryData = async () => {
         const fetchData = async () => {
             const all_category_details = await fetch(
@@ -108,7 +108,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
     }
 
     const actionHandler = () => {
-        if (staffid) {
+        if (taskid) {
             if (beforeSaveAction()) {
                 console.log("no any")
                 setAddnewIsOpen(false);
@@ -119,10 +119,37 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
             }
 
         } else {
-            addStaffNewAction();
+            addTaskNewAction();
         }
     }
 
+    //add new staff action
+    const addTaskNewAction = async (e) => {
+        const responseNewStaff = await fetch(
+            "api/task_routers/addnew_task_details",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ staffid, clientname, categoryid, location, visitcount }),
+            }
+        );
+
+        const res = await responseNewStaff.json();
+        console.log(res);
+
+        if (res.message == "SUCCESS") {
+            // setAddnewIsOpen(false);
+            // window.location.href = "/task"
+            // setShowAddnewAlert(true);
+            // setTimeout(() => {
+            //     setShowAddnewAlert(false);
+            // }, 2000);
+        } else {
+            router.push("/");
+        }
+        return res;
+
+    };
     //delete staff action
     const deleteActionHandler = async () => {
 
@@ -146,39 +173,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
 
     }
 
-    //add new staff action
-    const addStaffNewAction = async (e) => {
-        if (password == confirmpassword) {
-            const responseNewStaff = await fetch(
-                "api/staff_routers/addnew_staff_details",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, contracttype, contactno, nic, password }),
-                }
-            );
 
-            const res = await responseNewStaff.json();
-            console.log(res);
-
-            if (res.message == "SUCCESS") {
-                setAddnewIsOpen(false);
-                setShowAddnewAlert(true);
-                setTimeout(() => {
-                    setShowAddnewAlert(false);
-                    window.location.href = "/staff"
-                }, 2000);
-            } else {
-                router.push("/");
-            }
-            return res;
-        } else {
-            setShowPasswordWarnAlert(true);
-            setTimeout(() => {
-                setShowPasswordWarnAlert(false);
-            }, 5000);
-        }
-    };
 
     //update existing staff action
     const updateStaffAction = async (e) => {
@@ -294,7 +289,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
                         </div>
                         <div className="flex">
                             <div className="mr-3">
-                                <button onClick={test}
+                                <button onClick={actionHandler}
                                     className="rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
                                 >
                                     Submit

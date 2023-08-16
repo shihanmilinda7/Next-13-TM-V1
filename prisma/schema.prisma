@@ -34,7 +34,14 @@ model categorydetails{
   categorydetailname String   
 }
 
-
+model tasks{
+  taskid       Int      @id @default(autoincrement())
+  staffid       String
+  clientname String   
+  categoryid String
+  location String
+  visitcount String
+}
 
 model user{
   userid       Int      @id @default(autoincrement())
