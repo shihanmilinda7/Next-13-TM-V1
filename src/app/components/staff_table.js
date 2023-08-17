@@ -7,7 +7,7 @@ export const StaffTable = ({ staffRowData }) => {
 
   return (
     <div className="md:px-2 py-2 w-full">
-      <div className="shadow overflow-hidden rounded border-b border-gray-200 w-full">
+      <div className="shadow overflow-y-scroll rounded border-b border-gray-200 w-full">
         <table className="min-w-full bg-white">
           <thead className="border-b-2 text-black border-indigo-400">
             <tr>
