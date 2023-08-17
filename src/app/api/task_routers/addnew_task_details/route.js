@@ -10,7 +10,8 @@ export async function POST(request) {
       clientname, 
       categoryid, 
       location, 
-      visitcount
+      visitcount,
+      status:"Not Completed"
     },
   });
 

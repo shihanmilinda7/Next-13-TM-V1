@@ -26,7 +26,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
     //   const [showAddnewAlert, setShowAddnewAlert] = useState(false);
     //   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
     //   const [showPasswordWarn, setShowPasswordWarnAlert] = useState(false);
-    //   const [showDelButton, setShowDelButton] = useState(delButton);
+    const [showDelButton, setShowDelButton] = useState(delButton);
 
     // const [saveChangeWarning, setSaveChangeWarning] = useState(false);
 
@@ -64,7 +64,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
             );
             const res = await all_staff_details.json();
             setFetchedStaffData(res.users);
-            // console.log("res",res.users,)
+            // setStaffid(selRowData?.staffid ?? "");
         };
         // call the function
         fetchData().catch(console.error);
@@ -109,21 +109,13 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
 
     const actionHandler = () => {
         if (taskid) {
-            if (beforeSaveAction()) {
-                console.log("no any")
-                setAddnewIsOpen(false);
-            } else {
-                console.log("change")
-                updateStaffAction();
-                // setSaveChangeWarning(true);
-            }
-
+            updateTaskAction();
         } else {
             addTaskNewAction();
         }
     }
 
-    //add new staff action
+    //add new task action
     const addTaskNewAction = async (e) => {
         const responseNewStaff = await fetch(
             "api/task_routers/addnew_task_details",
@@ -150,57 +142,56 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
         return res;
 
     };
-    //delete staff action
-    const deleteActionHandler = async () => {
 
-        if (staffid) {
-            const responseDelStaff = await fetch(
-                "api/staff_routers/del_staff_details",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ staffid }),
-                }
-            );
-
-            const res = await responseDelStaff.json();
-            console.log(res);
-            setAddnewIsOpen(false);
-            window.location.href = "/staff"
-        } else {
-            window.location.href = "/staff"
-        }
-
-    }
-
-
-
-    //update existing staff action
-    const updateStaffAction = async (e) => {
-        const responseUpdateStaff = await fetch(
-            "api/staff_routers/update_staff_details",
+    //update existing task action
+    const updateTaskAction = async (e) => {
+        const responseUpdateTask = await fetch(
+            "api/task_routers/update_task_details",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ staffid, name, contracttype, contactno, nic, password }),
+                body: JSON.stringify({ taskid, staffid, clientname, categoryid, location, visitcount }),
             }
         );
 
-        const res = await responseUpdateStaff.json();
+        const res = await responseUpdateTask.json();
         console.log(res);
 
         if (res.message == "SUCCESS") {
             setAddnewIsOpen(false);
-            setShowUpdateAlert(true);
-            setTimeout(() => {
-                setShowUpdateAlert(false);
-                window.location.href = "/staff"
-            }, 3000);
+            window.location.href = "/task"
+            // setShowUpdateAlert(true);
+            // setTimeout(() => {
+            //     setShowUpdateAlert(false);
+            // }, 3000);
         } else {
             router.push("/");
         }
         return res;
     };
+
+    //delete task action
+    const deleteActionHandler = async () => {
+
+        if (taskid) {
+            const responseDelTask = await fetch(
+                "api/task_routers/del_task_details",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ taskid }),
+                }
+            );
+
+            const res = await responseDelTask.json();
+            // console.log(res);
+            setAddnewIsOpen(false);
+            window.location.href = "/task"
+        } else {
+            window.location.href = "/task"
+        }
+
+    }
 
     return (
         <div>
@@ -302,15 +293,9 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
                                     Cancel
                                 </button>
                             </div>
-                            {/* <div className={showDelButton === "true" ? "flex ml-auto" : "flex ml-auto hidden"}> */}
-                            {/* <ConfirmAlertbox buttonName="Delete" leftButtonAction={deleteActionHandler} title="Are you sure?" description="Do you want to delete this record ?" /> */}
-
-                            {/* <button onClick={deleteActionHandler}
-                  className="rounded-lg bg-gradient-to-r from-red-500 to-red-600  hover:bg-gradient-to-l hover:from-red-500 hover:to-red-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
-                >
-                  Delete
-                </button> */}
-                            {/* </div> */}
+                            <div className={showDelButton === "true" ? "flex ml-auto" : "flex ml-auto hidden"}>
+                                <ConfirmAlertbox buttonName="Delete" leftButtonAction={deleteActionHandler} title="Are you sure?" description="Do you want to delete this record ?" />
+                            </div>
                         </div>
                     </div>
                 </div>

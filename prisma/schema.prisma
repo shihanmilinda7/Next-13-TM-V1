@@ -41,6 +41,7 @@ model tasks{
   categoryid String
   location String
   visitcount String
+  status String
 }
 
 model user{

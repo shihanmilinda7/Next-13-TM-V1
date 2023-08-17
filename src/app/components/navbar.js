@@ -27,7 +27,7 @@ const Navbar = () => {
             <Link href="/staff" className={currentRoute === '/staff' ? activeStyle : nonActiveStyle}>Staff</Link>
             <Link href="/category" className={currentRoute === '/category' ? activeStyle : nonActiveStyle}>Category</Link>
             <Link href="/task" className={currentRoute === '/task' ? activeStyle : nonActiveStyle}>Task</Link>
-            {/* <Link href="/projects" className={currentRoute === '/projects' ? activeStyle : nonActiveStyle}>Projects</Link> */}
+            <Link href="/projects" className={currentRoute === '/projects' ? activeStyle : nonActiveStyle}>Projects</Link>
             {/* <Link href={"/time_allocation/"+new Date().toJSON().slice(0, 10)} className={currentRoute === "/time_allocation/"+new Date().toJSON().slice(0, 10) ? activeStyle : nonActiveStyle}>Time Allocation</Link> */}
             <Link href="/" className={currentRoute === '/' ? activeStyle : nonActiveStyle}>Report</Link>
           </li>

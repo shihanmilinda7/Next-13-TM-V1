@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SelectBoxInputField = ({ label, options, onSelect,optionValue,optionLabel }) => {
+const SelectBoxInputField = ({ label,value, options, onSelect,optionValue,optionLabel }) => {
   return (
 
     <div class="mb-5">
@@ -12,7 +12,8 @@ const SelectBoxInputField = ({ label, options, onSelect,optionValue,optionLabel 
       </label>
       <select
         className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
-        onChange={onSelect}>
+        onChange={onSelect}
+        value={value}>
         {options.map((option) => (
           <option key={option[optionValue]} value={option[optionValue]}>
             {option[optionLabel]}

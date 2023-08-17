@@ -6,6 +6,8 @@ export async function POST(request) {
   console.log("categoryname",categoryname);
   console.log("categoryValues",categoryValues);
 
+  // have to do transacrtion
+
   const newCategoty = await prisma.categories.create({
     data: {
       categoryname
@@ -35,3 +37,7 @@ export async function POST(request) {
   return NextResponse.json(res)
   // return NextResponse.json({message:"SUCCESS"})
 }
+const [posts, totalPosts] = await prisma.$transaction([
+  prisma.post.findMany({ where: { title: { contains: 'prisma' } } }),
+  prisma.post.count(),
+])
