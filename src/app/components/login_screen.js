@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import Toast from "./toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("admin@sds.com");
-  const [password, setPassword] = useState("admin");
+  const [email, setEmail] = useState("0769644222");
+  const [password, setPassword] = useState("1234");
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -22,7 +22,7 @@ const Login = () => {
 
     if (res.message == "SUCCESS") {
       try {
-        localStorage.setItem("userid", res.users[0].userid);
+        localStorage.setItem("staffid", res.users[0].staffid);
         localStorage.setItem("userDetails", JSON.stringify(res.users[0]));
       } catch (error) { }
       redirect("/dashboard");
@@ -74,8 +74,8 @@ const Login = () => {
                   value={email}
                   id="email"
                   name="email"
-                  type="email"
-                  autocomplete="email"
+                  type="text"
+                  autocomplete=""
                   placeholder=""
                   onChange={(e) => setEmail(e.target.value)}
                 />

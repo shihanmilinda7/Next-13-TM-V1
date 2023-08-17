@@ -22,10 +22,6 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
 
     const [fetchedStaffData, setFetchedStaffData] = useState("")
     const [fetchedCategoryData, setFetchedCategoryData] = useState("")
-    const [fetchedCategoryDetailsData, setFetchedCategoryDetailsData] = useState([])
-
-    // const [showMoreLink, setShowMoreLink] = useState("")
-    const [showCatDetails, setShowCatDetails] = useState(false)
 
     //   const [showAddnewAlert, setShowAddnewAlert] = useState(false);
     //   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
@@ -50,33 +46,9 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
         },
     };
 
-    //show category details
-    const showCategoryDeatils = () => {
-        setShowCatDetails(!showCatDetails);
-    }
-    //change event for category select
-    const categoryOnSelect = (e) => {
-        setCategoryid(e.target.value);
-        fetchCatDetailsData(e.target.value);
-    }
-
-    //fetch category details as sel category data
-    const fetchCatDetailsData = async (categoryid) => {
-        const fetchData = async () => {
-            const all_cat_details = await fetch(
-                "api/category_routers/get_all_catdetails_as_cat",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ categoryid }),
-                }
-            );
-            const res = await all_cat_details.json();
-            setFetchedCategoryDetailsData(res.categoriesData);
-            // setStaffid(selRowData?.staffid ?? "");
-        };
-        // call the function
-        fetchData().catch(console.error);
+    const test = () => {
+        console.log("name", staffid,)
+        console.log("categoryid", categoryid,)
     }
 
     //fetch staff data
@@ -111,7 +83,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
             );
             const res = await all_category_details.json();
             setFetchedCategoryData(res.categoriesData);
-            // console.log("res", res.categoriesData,)
+            console.log("res", res.categoriesData,)
         };
         // call the function
         fetchData().catch(console.error);
@@ -120,12 +92,20 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
     useEffect(() => {
         fetchStaffData();
         fetchCategoryData();
-        if (categoryid) {
-            fetchCatDetailsData(categoryid);
-        }
-
     }, []);
 
+
+    function beforeSaveAction() {
+        delete selRowData.createdAt;
+        const newObject = { staffid, name, contracttype, contactno, nic, password }
+        const keys = Object.keys(selRowData);
+        for (const key of keys) {
+            if (selRowData[key] !== newObject[key]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     const actionHandler = () => {
         if (taskid) {
@@ -265,13 +245,10 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
                                     options={fetchedCategoryData}
                                     optionValue="categoryid"
                                     optionLabel="categoryname"
-                                    onSelect={(e) => categoryOnSelect(e)}
+                                    onSelect={(e) => setCategoryid(e.target.value)}
                                 />
-                                <h1 className="text-indigo-800 font-semiboldd hover:font-bold cursor-pointer mb-4" onClick={showCategoryDeatils}>{showCatDetails ? "Show Less" : "Show More"}</h1>
-                                <div className={showCatDetails ? "flex" : "flex hidden"}>
-                                    {fetchedCategoryDetailsData.map((data, index) => (
-                                        <InputField type="text" value={data.categorydetailname} />))}
-                                </div>
+
+                                {/* <h1>Show More</h1> */}
                                 <div className="-mx-3 flex flex-wrap">
                                     <div className="w-full px-3 sm:w-3/4">
                                         <InputField

@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const {email, password} = await request.json();
   let res;
-  // console.log("------------------------" + email + "-asaSAS------------------------------------------");
-  const users = await prisma.user.findMany({
+  // console.log("------------------------" + password + "-asaSAS------------------------------------------");
+  const users = await prisma.staff.findMany({
     where: {
-      email: {
+      contactno: {
         contains: email, 
         // contains: "admin@sds.com", 
       },

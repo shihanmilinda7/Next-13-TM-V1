@@ -32,39 +32,15 @@ export default function Dashboard() {
       <Navbar />
       <h1 className="text-2xl m-4 text-indigo-800 font-semibold">Insights at a Glance: Your Project Dashboard</h1>
 
-      <div className="flex flex-wrap pt-4">
+      <div className="flex flex-wrap pt-4 bg-red-900">
 
-        <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4">
-          <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
-            <div className="flex-auto p-4">
-              <div className="flex flex-wrap">
-                <div className="relative w-full pr-4 max-w-full flex-grow flex-1 flex-col">
-                  <h5 className="text-indigo-900 uppercase text-2xl"> Tasks</h5>
-                  <h5 className="text-indigo-800 font-semibold text-xl text-blueGray-700 mb-4"> Remaining Tasks - {JSON.stringify(taskData.length)}</h5>
-                  {/* <h5>{JSON.stringify(taskData[0])}</h5> */}
-                  <div className="flex flex-col">
-                    {taskData.map((task, index) => (
-                      <div className=" border-t-2 border-indigo-700">
-                        <h5 className="font-semibold text-sm text-blueGray-700">{task["clientname"]}</h5>
-                        <h5 className="font-semibold text-sm text-blueGray-700">{task["location"]}</h5>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="relative w-auto pl-4 flex-initial">
-                  <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full  bg-green-500">
-                    <i className="fas fa-chart-bar"></i>
-                  </div>
-                </div>
-              </div>
-              {/* <p className="text-sm text-blueGray-400 mt-4"> */}
-              {/* <span className="text-emerald-500 mr-2"><i className="fas fa-arrow-up"></i> 2,99% </span> */}
-              {/* <span className="whitespace-nowrap"> Since last month </span></p> */}
-            </div>
+        <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4 bg-green-800">
+          <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg overflow-y-scroll">
+
           </div>
         </div>
 
-        <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4">
+        <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4 bg-green-800">
           <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
@@ -88,7 +64,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className=" mt-4 w-full lg:w-6/12 xl:w-3/12 px-5">
+        <div className=" mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 bg-green-800">
           <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-4 xl:mb-0 shadow-lg">
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
