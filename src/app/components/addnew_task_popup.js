@@ -171,7 +171,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
     };
 
     //delete task action
-    const deleteActionHandler = async () => {
+    const deleteTaskActionHandler = async () => {
 
         if (taskid) {
             const responseDelTask = await fetch(
@@ -294,7 +294,7 @@ const AddNewTaskPopup = ({ buttonName, selRowData, delButton }) => {
                                 </button>
                             </div>
                             <div className={showDelButton === "true" ? "flex ml-auto" : "flex ml-auto hidden"}>
-                                <ConfirmAlertbox buttonName="Delete" leftButtonAction={deleteActionHandler} title="Are you sure?" description="Do you want to delete this record ?" />
+                                <ConfirmAlertbox buttonName="Delete" leftButtonAction={deleteTaskActionHandler} title="Are you sure?" description="Do you want to delete this record ?" />
                             </div>
                         </div>
                     </div>

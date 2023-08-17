@@ -17,7 +17,7 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton, deleteCategory
 
   const [showAddnewAlert, setShowAddnewAlert] = useState(false);
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
-  const [showDelButton, setShowDelButton] = useState(false);
+  const [showDelButton, setShowDelButton] = useState(delButton);
 
   const customStyles = {
     overlay: {
@@ -97,6 +97,29 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton, deleteCategory
     return res;
 
   };
+
+  //delete category action
+  const deleteCategoryActionHandler = async () => {
+
+    if (categoryid) {
+        const responseDelCat = await fetch(
+            "api/category_routers/del_category_details",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ categoryid }),
+            }
+        );
+
+        const res = await responseDelCat.json();
+        // console.log(res);
+        setAddnewIsOpen(false);
+        window.location.href = "/category"
+    } else {
+        window.location.href = "/category"
+    }
+
+}
 
   //add new input field for category value
   const addInputField = () => {
@@ -197,7 +220,7 @@ const AddNewCategoryPopup = ({ buttonName, selRowData, delButton, deleteCategory
                 </button>
               </div>
               <div className={showDelButton === "true" ? "flex ml-auto" : "flex ml-auto hidden"}>
-                <ConfirmAlertbox buttonName="Delete" title="Are you sure?" description="Do you want to delete this record ?" />
+              <ConfirmAlertbox buttonName="Delete" leftButtonAction={deleteCategoryActionHandler} title="Are you sure?" description="Do you want to delete this record ?" />
               </div>
             </div>
           </div>
